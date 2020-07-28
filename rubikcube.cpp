@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<string.h>
-char *block_conversion(char **block,char const rotation[]){
+const char *block_conversion(const char **block,char const rotation[]){
 	if(!strcmp(rotation,"x0")){
 		if(!strcmp(*block,"000"))*block="001";
 		else if(!strcmp(*block,"001"))*block="011";
@@ -133,12 +133,12 @@ int main(void){
 	char *block[8]={"000","001","010","011","100","101","110","111"},
 		displacement[8][256]={"","x0","","","","","",""},rotation[10]="0",buffer[256];
 		*/
-	char *block[8]={"001","011","000","010","111","101","100","110"},
+	const char *block[8]={"001","011","000","010","111","101","100","110"};
 		displacement[8][256]={"x0","-x0","","","","","",""},rotation[10]="0",buffer[256];
 
-	printf("uendv‚ÅI—¹\nuresetv‚ÅŒ³‚Ìó‘Ô‚É–ß‚é\n");
+	printf("ï¿½uendï¿½vï¿½ÅIï¿½ï¿½\nï¿½uresetï¿½vï¿½ÅŒï¿½ï¿½Ìï¿½Ô‚É–ß‚ï¿½\n");
 	for(i=0;i<8;i++)printf("%s %s\n",block[i],displacement[i]);
-	printf("\n¨");
+	printf("\nï¿½ï¿½");
 	scanf("%s",rotation);
 	if(!strcmp(rotation,"end"))return(0);
 	do{
@@ -154,7 +154,7 @@ int main(void){
 			strcpy(displacement[i],buffer);
 			printf("%s %s\n",block[i],displacement[i]);
 		}
-		printf("\n¨");
+		printf("\nï¿½ï¿½");
 		scanf("%s",rotation);
 	}while(strcmp(rotation,"end"));
 	return(0);
