@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<string.h>
+
+
 const char *block_conversion(const char **block,char const rotation[]){
 	if(!strcmp(rotation,"x0")){
 		if(!strcmp(*block,"000"))*block="001";
@@ -123,17 +125,50 @@ const char *block_conversion(const char **block,char const rotation[]){
 	}
 	else return("");
 }
-int main(void){
-	int i=0,depth=0;
-	const char *block[8]={"001","011","000","010","111","101","100","110"}; // ポインタ文字列（変数）
-	const char goal_block[8][4]={"011","001","000","010","111","101","100","110"}; // 配列文字列（定数）
-	char displacement[8][256]={"x0","-x0","","","","","",""},rotation[10]="0",buffer[256];
-
-	for (depth= 0;block==goal_block;depth++){
-		block_conversion(block+i,rotation);
-		strcat(buffer,displacement[i]);
-		printf("%s\n",displacement[i]);
+bool blockscmp(const char *blocks1[],const char *blocks2[]){ // blocks1,blocks2が一致しているか判定する
+	int i=0;
+	for(i= 0;i<8;i++){
+		if(strcmp(blocks1[i],blocks2[i]))return(false);
 	}
-		
+	return(true);
+
+}
+
+const int M=10; // 回転の種類の数
+char displacement[256]="",rotation[10]="0",buffer[256],
+rotation_list[10][4]={"x0","-x0","x1","-x1","y0","-y0","y1","-y1","z0","-z0"};
+char invalid_rotation[4];
+
+bool iddfs(int depth,const char *blocks[],const char *goal_blocks[],int limit){
+	//int i=0,j=0;
+	if(limit==depth){
+		if(blockscmp(blocks,goal_blocks))return(true);
+	}
+	else{
+		for (int j=0;j<M;j++){
+			strcat(displacement,rotation_list[j]);
+			for(int i= 0;i<8;i++){
+				if(!strcmp(invalid_rotation,"")){
+					strcpy(invalid_rotation,block_conversion(blocks+i,rotation));
+				}
+				else block_conversion(blocks+i,rotation_list[j]);
+			}
+			iddfs(depth+1,blocks,goal_blocks,limit);
+			printf("%s\n",displacement);
+		}
+	}
+}
+int main(void){
+	int i=0,depth=0,limit=0;
+	const char *blocks[8]={"001","011","000","010","111","101","100","110"}, // ポインタ文字列の配列
+	*goal_blocks[8]={"011","001","000","010","111","101","100","110"}; // ポインタ文字列の配列
+
+	for (limit = 2; limit <= 20; limit++) {
+		strcpy(invalid_rotation,"");
+		strcpy(displacement,"");
+		if(iddfs(1,blocks,goal_blocks,limit)){
+			printf("見つかりました");
+		}
+	}	
 	return(0);
 }
