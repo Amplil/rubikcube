@@ -140,19 +140,18 @@ void blockscpy(const char *blocks1[],const char *blocks2[]){ // blocks2からblock
 const int M=10; // 回転の種類の数
 char rotation_list[10][4]={"x0","-x0","x1","-x1","y0","-y0","y1","-y1","z0","-z0"};
 
-bool iddfs(int depth,char current_invalid_rotation[],const char *current_displacement,const char *current_blocks[],const char *goal_blocks[],int limit){
-	const char *blocks_befo[8];
-	char displacement_befo[256],invalid_rotation_befo[4];
+bool iddfs(int depth,const char invalid_rotation_befo[],const char *displacement_befo,const char *blocks_befo[],const char *goal_blocks[],int limit){
+	const char *blocks[8];
+	char displacement[256],invalid_rotation[4];
 	if(limit==depth){
-		printf("%s\n",current_displacement);
-		//printf("候補");
-
-		if(blockscmp(current_blocks,goal_blocks))return(true);
+		printf("%s\n",displacement_befo);
+		if(blockscmp(blocks_befo,goal_blocks))return(true);
 	}
 	else{
 		for (int j=0;j<M;j++){
-			blockscpy(blocks,current_blocks); // 元に戻す
-			strcpy(displacement,current_displacement); // 元に戻す
+			blockscpy(blocks,blocks_befo); // 元に戻す
+			strcpy(displacement,displacement_befo); // 元に戻す
+			strcpy(invalid_rotation,invalid_rotation_befo); // 元に戻す
 			if(strcmp(invalid_rotation,rotation_list[j])){ // 無効な回転（1つ前の回転を打ち消す回転）でないなら
 				strcat(displacement,rotation_list[j]);
 				for(int i= 0;i<8;i++){
@@ -162,8 +161,8 @@ bool iddfs(int depth,char current_invalid_rotation[],const char *current_displac
 					}
 					// else block_conversion(blocks+i,rotation_list[j]);
 				}
-				if(iddfs(depth+1,displacement,blocks,goal_blocks,limit))return(true); // trueならtrueを返す
-				strcpy(invalid_rotation,""); // depthがlimitまで到達したため元に戻す
+				if(iddfs(depth+1,invalid_rotation,displacement,blocks,goal_blocks,limit))return(true); // trueならtrueを返す
+				// strcpy(invalid_rotation,""); // depthがlimitまで到達したため元に戻す
 			}
 		}
 	}
@@ -172,9 +171,11 @@ bool iddfs(int depth,char current_invalid_rotation[],const char *current_displac
 int main(void){
 	// int i=0,depth=0,limit=0;
 	int limit=0;
-	const int N=10; // 最大の深さ
+	const int N=15; // 最大の深さ
 	const char *start_blocks[8]={"001","011","000","010","111","101","100","110"}, // ポインタ文字列の配列
 	*goal_blocks[8]={"011","001","000","010","111","101","100","110"}; // ポインタ文字列の配列
+	// const char *start_blocks[8]={"011","001","000","010","100","110","101","111"}, // ポインタ文字列の配列
+	// *goal_blocks[8]={"111","100","101","011","000","001","110","010"}; // ポインタ文字列の配列
 
 	for (limit = 2; limit<=N; limit++) {
 		//strcpy(invalid_rotation,"");
