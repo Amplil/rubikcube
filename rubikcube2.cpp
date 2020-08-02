@@ -3,35 +3,44 @@
 
 void blocks_conversion(const char *blocks[],const char *conversion[]){
 	for(int i= 0;i<8;i++){
-		if(!strcmp(blocks[i],"000"))blocks[i]=conversion[0];
-		else if(!strcmp(blocks[i],"001"))blocks[i]=conversion[1];
-		else if(!strcmp(blocks[i],"010"))blocks[i]=conversion[2];
-		else if(!strcmp(blocks[i],"011"))blocks[i]=conversion[3];
-		else if(!strcmp(blocks[i],"100"))blocks[i]=conversion[4];
-		else if(!strcmp(blocks[i],"101"))blocks[i]=conversion[5];
-		else if(!strcmp(blocks[i],"110"))blocks[i]=conversion[6];
-		else if(!strcmp(blocks[i],"111"))blocks[i]=conversion[7];
+		if(!strcmp(blocks[i],"000") && strcmp(conversion[0],""))blocks[i]=conversion[0];
+		else if(!strcmp(blocks[i],"001") && strcmp(conversion[1],""))blocks[i]=conversion[1];
+		else if(!strcmp(blocks[i],"010") && strcmp(conversion[2],""))blocks[i]=conversion[2];
+		else if(!strcmp(blocks[i],"011") && strcmp(conversion[3],""))blocks[i]=conversion[3];
+		else if(!strcmp(blocks[i],"100") && strcmp(conversion[4],""))blocks[i]=conversion[4];
+		else if(!strcmp(blocks[i],"101") && strcmp(conversion[5],""))blocks[i]=conversion[5];
+		else if(!strcmp(blocks[i],"110") && strcmp(conversion[6],""))blocks[i]=conversion[6];
+		else if(!strcmp(blocks[i],"111") && strcmp(conversion[7],""))blocks[i]=conversion[7];
 	}
 }
-void directions_conversion(int directions[],int conversion[]){ // 
+void direction_conversion(int *direction,int conversion){
 	// 0: ‰½‚à‚µ‚È‚¢
 	// 1: 0‚È‚ç1‚É1‚È‚ç0‚É
 	// 2: 1‚È‚ç2‚É2‚È‚ç1‚É
 	// 3: 0‚È‚ç2‚É2‚È‚ç0‚É
+	if(conversion==1){
+		if(*direction==0)*direction=1;
+		else if(*direction==1)*direction=0;
+	}
+	else if(conversion==2){
+		if(*direction==1)*direction=2;
+		else if(*direction==2)*direction=1;
+	}
+	else if(conversion==3){
+		if(*direction==0)*direction=2;
+		else if(*direction==2)*direction=0;
+	}
+}
+void directions_conversion(const char *blocks[],int directions[],int conversion[]){
 	for(int i= 0;i<8;i++){
-		if(conversion[i]==1){
-			if(directions[i]==0)directions[i]=1;
-			else if(directions[i]==1)directions[i]=0;
-		}
-		else if(conversion[i]==2){
-			if(directions[i]==1)directions[i]=2;
-			else if(directions[i]==2)directions[i]=1;
-		}
-		else if(conversion[i]==3){
-			if(directions[i]==0)directions[i]=2;
-			else if(directions[i]==2)directions[i]=0;
-		}
-		//else if(directions[i]==conversion[1])directions[i]=conversion[0];
+		if(!strcmp(blocks[i],"000"))direction_conversion(directions+i,conversion[0]);
+		else if(!strcmp(blocks[i],"001"))direction_conversion(directions+i,conversion[1]);
+		else if(!strcmp(blocks[i],"010"))direction_conversion(directions+i,conversion[2]);
+		else if(!strcmp(blocks[i],"011"))direction_conversion(directions+i,conversion[3]);
+		else if(!strcmp(blocks[i],"100"))direction_conversion(directions+i,conversion[4]);
+		else if(!strcmp(blocks[i],"101"))direction_conversion(directions+i,conversion[5]);
+		else if(!strcmp(blocks[i],"110"))direction_conversion(directions+i,conversion[6]);
+		else if(!strcmp(blocks[i],"111"))direction_conversion(directions+i,conversion[7]);
 	}
 }
 const char *blocks_rotation(const char *blocks[],int directions[],const char rotation[]){
@@ -39,70 +48,70 @@ const char *blocks_rotation(const char *blocks[],int directions[],const char rot
 		const char *converted_blocks[8]={"001","011","000","010","","","",""};
 		int converted_directions[8]={2,2,2,2,0,0,0,0};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("-x0");
 	}
 	else if(!strcmp(rotation,"x1")){
 		const char *converted_blocks[8]={"","","","","101","111","100","110"};
 		int converted_directions[8]={0,0,0,0,2,2,2,2};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("-x1");
 	}
 	else if(!strcmp(rotation,"-x0")){
 		const char *converted_blocks[8]={"010","000","011","001","","","",""};
 		int converted_directions[8]={2,2,2,2,0,0,0,0};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("x0");
 	}
 	else if(!strcmp(rotation,"-x1")){
 		const char *converted_blocks[8]={"","","","","110","100","111","101"};
 		int converted_directions[8]={0,0,0,0,2,2,2,2};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("x1");
 	}
 	else if(!strcmp(rotation,"y0")){
 		const char *converted_blocks[8]={"001","101","","","000","100","",""};
 		int converted_directions[8]={3,3,0,0,3,3,0,0};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("-y0");
 	}
 	else if(!strcmp(rotation,"y1")){
 		const char *converted_blocks[8]={"","","011","111","","","010","110"};
 		int converted_directions[8]={0,0,3,3,0,0,3,3};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("-y1");
 	}
 	else if(!strcmp(rotation,"-y0")){
 		const char *converted_blocks[8]={"100","000","","","101","001","",""};
 		int converted_directions[8]={3,3,0,0,3,3,0,0};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("y0");
 	}
 	else if(!strcmp(rotation,"-y1")){
 		const char *converted_blocks[8]={"","","110","010","","","111","011"};
 		int converted_directions[8]={0,0,3,3,0,0,3,3};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("y1");
 	}
 	else if(!strcmp(rotation,"z0")){
 		const char *converted_blocks[8]={"100","","000","","110","","010",""};
 		int converted_directions[8]={1,0,1,0,1,0,1,0};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("-z0");
 	}
 	else if(!strcmp(rotation,"-z0")){
 		const char *converted_blocks[8]={"010","","110","","000","","100",""};
 		int converted_directions[8]={1,0,1,0,1,0,1,0};
 		blocks_conversion(blocks,converted_blocks);
-		directions_conversion(directions,converted_directions);
+		directions_conversion(blocks,directions,converted_directions);
 		return("z0");
 	}
 	else return("");
@@ -142,12 +151,15 @@ int main(void){
 	for(int i=0;i<8;i++){
 		printf("%s %d\n",blocks[i],directions[i]);
 	}
-	printf("%s\n¨",displacement);
+	printf("displacement=%s invalid_rotation=%s \n¨",displacement,invalid_rotation);
 	scanf("%s",rotation);
 	if(!strcmp(rotation,"end"))return(0);
 	do{
 		if(!strcmp(rotation,"reset")){
-			memcpy(blocks,start_blocks,sizeof(start_blocks));
+			blockscpy(blocks,start_blocks); // Œ³‚É–ß‚·
+			strcpy(displacement,""); // Œ³‚É–ß‚·
+			strcpy(invalid_rotation,""); // Œ³‚É–ß‚·
+			memcpy(directions,start_directions,sizeof(start_directions)); // Œ³‚É–ß‚·
 		}
 		else{
 			strcat(displacement,rotation);
@@ -160,7 +172,7 @@ int main(void){
 		if(blockscmp(blocks,goal_blocks) && memcmp(directions,goal_directions,sizeof(start_directions))){
 			printf("ƒS[ƒ‹‚Æ‡’v‚µ‚Ü‚µ‚½");
 		}
-		printf("%s\n¨",displacement);
+		printf("displacement=%s invalid_rotation=%s \n¨",displacement,invalid_rotation);
 		scanf("%s",rotation);
 	}while(strcmp(rotation,"end"));
 	return(0);
