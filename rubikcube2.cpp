@@ -169,8 +169,8 @@ int main(void){
 		for(int i=0;i<8;i++){
 			printf("%s %d\n",blocks[i],directions[i]);
 		}
-		if(blockscmp(blocks,goal_blocks) && memcmp(directions,goal_directions,sizeof(start_directions))){
-			printf("ƒS[ƒ‹‚Æ‡’v‚µ‚Ü‚µ‚½");
+		if(blockscmp(blocks,goal_blocks) && !memcmp(directions,goal_directions,sizeof(start_directions))){
+			printf("ƒS[ƒ‹‚Æ‡’v‚µ‚Ü‚µ‚½\n");
 		}
 		printf("displacement=%s invalid_rotation=%s \n¨",displacement,invalid_rotation);
 		scanf("%s",rotation);
