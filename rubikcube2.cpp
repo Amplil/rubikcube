@@ -130,13 +130,13 @@ void blockscpy(const char *blocks1[],const char *blocks2[]){ // blocks2からblock
 
 const int M=10; // 回転の種類の数
 char rotation_list[10][4]={"x0","-x0","x1","-x1","y0","-y0","y1","-y1","z0","-z0"};
-//const char *start_blocks[8]={"001","011","000","010","111","101","100","110"}, // ポインタ文字列の配列
-//*goal_blocks[8]={"011","001","000","010","111","101","100","110"}; // ポインタ文字列の配列
+const char *start_blocks[8]={"001","011","000","010","111","101","100","110"}, // ポインタ文字列の配列
+*goal_blocks[8]={"011","001","000","010","111","101","100","110"}; // ポインタ文字列の配列
+int start_directions[8]={0,0,0,0,0,0,0,0},goal_directions[8]={0,0,0,0,0,0,0,0};
 
-const char *start_blocks[8]={"011","001","000","010","100","110","101","111"}, // ポインタ文字列の配列
-*goal_blocks[8]={"111","100","101","011","000","001","110","010"}; // ポインタ文字列の配列
-//int start_directions[8]={0,0,0,0,0,0,0,0},goal_directions[8]={0,0,0,0,0,0,0,0};
-int start_directions[8]={0,0,0,0,0,2,0,0},goal_directions[8]={2,0,0,2,0,1,2,2};
+//const char *start_blocks[8]={"011","001","000","010","100","110","101","111"}, // ポインタ文字列の配列
+//*goal_blocks[8]={"111","100","101","011","000","001","110","010"}; // ポインタ文字列の配列
+//int start_directions[8]={0,0,0,0,0,2,0,0},goal_directions[8]={2,0,0,2,0,1,2,2};
 int main(void){
 	const char *blocks[8];
 	int directions[8];

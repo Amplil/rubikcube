@@ -133,8 +133,13 @@ int main(void){
 	char *block[8]={"000","001","010","011","100","101","110","111"},
 		displacement[8][256]={"","x0","","","","","",""},rotation[10]="0",buffer[256];
 		*/
+	/*
 	const char *block[8]={"001","011","000","010","111","101","100","110"};
 	char displacement[8][256]={"x0","-x0","","","","","",""},rotation[10]="0",buffer[256];
+		*/
+
+	const char *block[8]={"011","001","000","010","111","101","100","110"};
+	char displacement[8][256]={"","","","","","","",""},rotation[10]="0",buffer[256];
 
 	printf("「end」で終了\n「reset」で元の状態に戻る\n");
 	for(i=0;i<8;i++)printf("%s %s\n",block[i],displacement[i]);
