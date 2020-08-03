@@ -146,6 +146,7 @@ bool iddfs(int depth,const char invalid_rotation_befo[],const char *displacement
 	if(limit==depth){
 		printf("%s\n",displacement_befo);
 		if(blockscmp(blocks_befo,goal_blocks) && !memcmp(directions_befo,goal_directions,sizeof(start_directions))){
+			printf("%s\n",displacement_befo);
 			return(true);
 		}
 	}
@@ -177,8 +178,9 @@ bool iddfs(int depth,const char invalid_rotation_befo[],const char *displacement
 int main(void){
 	// int i=0,depth=0,limit=0;
 	int limit=0;
-	const int N=15; // ç≈ëÂÇÃê[Ç≥
-	for (limit = 2; limit<=N; limit++) {
+	const int limit_end=15; // ç≈ëÂÇÃê[Ç≥
+	const int limit_start=6; // ç≈ëÂÇÃê[Ç≥
+	for (limit = limit_start; limit<=limit_end; limit++) {
 		//strcpy(invalid_rotation,"");
 		//strcpy(displacement,"");
 		if(iddfs(1,"","",start_blocks,start_directions,limit)){
