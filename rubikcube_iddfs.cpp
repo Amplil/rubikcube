@@ -14,10 +14,10 @@ void blocks_conversion(const char *blocks[],const char *conversion[]){
 	}
 }
 void direction_conversion(int *direction,int conversion){
-	// 0: ‰½‚à‚µ‚È‚¢
-	// 1: 0‚È‚ç1‚É1‚È‚ç0‚É
-	// 2: 1‚È‚ç2‚É2‚È‚ç1‚É
-	// 3: 0‚È‚ç2‚É2‚È‚ç0‚É
+	// 0: ä½•ã‚‚ã—ãªã„
+	// 1: 0ãªã‚‰1ã«1ãªã‚‰0ã«
+	// 2: 1ãªã‚‰2ã«2ãªã‚‰1ã«
+	// 3: 0ãªã‚‰2ã«2ãªã‚‰0ã«
 	if(conversion==1){
 		if(*direction==0)*direction=1;
 		else if(*direction==1)*direction=0;
@@ -116,25 +116,25 @@ const char *blocks_rotation(const char *blocks[],int directions[],const char rot
 	}
 	else return("");
 }
-bool blockscmp(const char *blocks1[],const char *blocks2[]){ // blocks1,blocks2‚ªˆê’v‚µ‚Ä‚¢‚é‚©”»’è‚·‚é
+bool blockscmp(const char *blocks1[],const char *blocks2[]){ // blocks1,blocks2ãŒä¸€è‡´ã—ã¦ã„ã‚‹ã‹åˆ¤å®šã™ã‚‹
 	for(int i= 0;i<8;i++){
 		if(strcmp(blocks1[i],blocks2[i]))return(false);
 	}
 	return(true);
 }
-void blockscpy(const char *blocks1[],const char *blocks2[]){ // blocks2‚©‚çblocks1‚ÖƒRƒs[
+void blockscpy(const char *blocks1[],const char *blocks2[]){ // blocks2ã‹ã‚‰blocks1ã¸ã‚³ãƒ”ãƒ¼
 	for(int i= 0;i<8;i++){
 		blocks1[i]=blocks2[i];
 	}
 }
 
-const int M=10; // ‰ñ“]‚Ìí—Ş‚Ì”
+const int M=10; // å›è»¢ã®ç¨®é¡ã®æ•°
 char rotation_list[10][4]={"x0","-x0","x1","-x1","y0","-y0","y1","-y1","z0","-z0"};
-const char *start_blocks[8]={"001","011","000","010","111","101","100","110"}, // ƒ|ƒCƒ“ƒ^•¶š—ñ‚Ì”z—ñ
-*goal_blocks[8]={"011","001","000","010","111","101","100","110"}; // ƒ|ƒCƒ“ƒ^•¶š—ñ‚Ì”z—ñ
+const char *start_blocks[8]={"001","011","000","010","111","101","100","110"}, // ãƒã‚¤ãƒ³ã‚¿æ–‡å­—åˆ—ã®é…åˆ—
+*goal_blocks[8]={"011","001","000","010","111","101","100","110"}; // ãƒã‚¤ãƒ³ã‚¿æ–‡å­—åˆ—ã®é…åˆ—
 
-//const char *start_blocks[8]={"011","001","000","010","100","110","101","111"}, // ƒ|ƒCƒ“ƒ^•¶š—ñ‚Ì”z—ñ
-//*goal_blocks[8]={"111","100","101","011","000","001","110","010"}; // ƒ|ƒCƒ“ƒ^•¶š—ñ‚Ì”z—ñ
+//const char *start_blocks[8]={"011","001","000","010","100","110","101","111"}, // ãƒã‚¤ãƒ³ã‚¿æ–‡å­—åˆ—ã®é…åˆ—
+//*goal_blocks[8]={"111","100","101","011","000","001","110","010"}; // ãƒã‚¤ãƒ³ã‚¿æ–‡å­—åˆ—ã®é…åˆ—
 
 int start_directions[8]={0,0,0,0,0,0,0,0},goal_directions[8]={0,0,0,0,0,0,0,0};
 //int start_directions[8]={0,0,0,0,0,2,0,0},goal_directions[8]={2,0,0,2,0,1,2,2};
@@ -152,24 +152,24 @@ bool iddfs(int depth,const char invalid_rotation_befo[],const char *displacement
 	}
 	else{
 		for (int j=0;j<M;j++){
-			blockscpy(blocks,blocks_befo); // Œ³‚É–ß‚·
-			strcpy(displacement,displacement_befo); // Œ³‚É–ß‚·
-			strcpy(invalid_rotation,invalid_rotation_befo); // Œ³‚É–ß‚·
-			memcpy(directions,directions_befo,sizeof(start_directions)); // Œ³‚É–ß‚·
-			if(strcmp(invalid_rotation,rotation_list[j])){ // –³Œø‚È‰ñ“]i1‚Â‘O‚Ì‰ñ“]‚ğ‘Å‚¿Á‚·‰ñ“]j‚Å‚È‚¢‚È‚ç
+			blockscpy(blocks,blocks_befo); // å…ƒã«æˆ»ã™
+			strcpy(displacement,displacement_befo); // å…ƒã«æˆ»ã™
+			strcpy(invalid_rotation,invalid_rotation_befo); // å…ƒã«æˆ»ã™
+			memcpy(directions,directions_befo,sizeof(start_directions)); // å…ƒã«æˆ»ã™
+			if(strcmp(invalid_rotation,rotation_list[j])){ // ç„¡åŠ¹ãªå›è»¢ï¼ˆ1ã¤å‰ã®å›è»¢ã‚’æ‰“ã¡æ¶ˆã™å›è»¢ï¼‰ã§ãªã„ãªã‚‰
 				strcat(displacement,rotation_list[j]);
 				strcpy(invalid_rotation,blocks_rotation(blocks,directions,rotation_list[j]));
 				/*
 				for(int i= 0;i<8;i++){
 					const char *rotation=block_conversion(blocks+i,rotation_list[j]);
-					if(strcmp(rotation,"")){ // block_conversion‚ª""‚ğ•Ô‚³‚È‚¯‚ê‚Î
+					if(strcmp(rotation,"")){ // block_conversionãŒ""ã‚’è¿”ã•ãªã‘ã‚Œã°
 						strcpy(invalid_rotation,rotation);
 					}
 					// else block_conversion(blocks+i,rotation_list[j]);
 				}
 				*/
-				if(iddfs(depth+1,invalid_rotation,displacement,blocks,directions,limit))return(true); // true‚È‚çtrue‚ğ•Ô‚·
-				// strcpy(invalid_rotation,""); // depth‚ªlimit‚Ü‚Å“’B‚µ‚½‚½‚ßŒ³‚É–ß‚·
+				if(iddfs(depth+1,invalid_rotation,displacement,blocks,directions,limit))return(true); // trueãªã‚‰trueã‚’è¿”ã™
+				// strcpy(invalid_rotation,""); // depthãŒlimitã¾ã§åˆ°é”ã—ãŸãŸã‚å…ƒã«æˆ»ã™
 			}
 		}
 	}
@@ -178,17 +178,17 @@ bool iddfs(int depth,const char invalid_rotation_befo[],const char *displacement
 int main(void){
 	// int i=0,depth=0,limit=0;
 	int limit=0;
-	const int limit_end=15; // Å‘å‚Ì[‚³
-	const int limit_start=6; // Å‘å‚Ì[‚³
+	const int limit_end=15; // æœ€å¤§ã®æ·±ã•
+	const int limit_start=6; // æœ€å¤§ã®æ·±ã•
 	for (limit = limit_start; limit<=limit_end; limit++) {
 		//strcpy(invalid_rotation,"");
 		//strcpy(displacement,"");
 		if(iddfs(1,"","",start_blocks,start_directions,limit)){
-			printf("Œ©‚Â‚©‚è‚Ü‚µ‚½");
+			printf("è¦‹ã¤ã‹ã‚Šã¾ã—ãŸ");
 			return(0);
 		}
-		//else printf("Œ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+		//else printf("è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ");
 	}	
-	printf("Œ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+	printf("è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ");
 	return(0);
 }

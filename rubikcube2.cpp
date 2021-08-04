@@ -14,10 +14,10 @@ void blocks_conversion(const char *blocks[],const char *conversion[]){
 	}
 }
 void direction_conversion(int *direction,int conversion){
-	// 0: ‰½‚à‚µ‚È‚¢
-	// 1: 0‚È‚ç1‚É1‚È‚ç0‚É
-	// 2: 1‚È‚ç2‚É2‚È‚ç1‚É
-	// 3: 0‚È‚ç2‚É2‚È‚ç0‚É
+	// 0: ä½•ã‚‚ã—ãªã„
+	// 1: 0ãªã‚‰1ã«1ãªã‚‰0ã«
+	// 2: 1ãªã‚‰2ã«2ãªã‚‰1ã«
+	// 3: 0ãªã‚‰2ã«2ãªã‚‰0ã«
 	if(conversion==1){
 		if(*direction==0)*direction=1;
 		else if(*direction==1)*direction=0;
@@ -116,54 +116,54 @@ const char *blocks_rotation(const char *blocks[],int directions[],const char rot
 	}
 	else return("");
 }
-bool blockscmp(const char *blocks1[],const char *blocks2[]){ // blocks1,blocks2‚ªˆê’v‚µ‚Ä‚¢‚é‚©”»’è‚·‚é
+bool blockscmp(const char *blocks1[],const char *blocks2[]){ // blocks1,blocks2ãŒä¸€è‡´ã—ã¦ã„ã‚‹ã‹åˆ¤å®šã™ã‚‹
 	for(int i= 0;i<8;i++){
 		if(strcmp(blocks1[i],blocks2[i]))return(false);
 	}
 	return(true);
 }
-void blockscpy(const char *blocks1[],const char *blocks2[]){ // blocks2‚©‚çblocks1‚ÖƒRƒs[
+void blockscpy(const char *blocks1[],const char *blocks2[]){ // blocks2ã‹ã‚‰blocks1ã¸ã‚³ãƒ”ãƒ¼
 	for(int i= 0;i<8;i++){
 		blocks1[i]=blocks2[i];
 	}
 }
 
-const int M=10; // ‰ñ“]‚Ìí—Ş‚Ì”
+const int M=10; // å›è»¢ã®ç¨®é¡ã®æ•°
 char rotation_list[10][4]={"x0","-x0","x1","-x1","y0","-y0","y1","-y1","z0","-z0"};
-//const char *start_blocks[8]={"001","011","000","010","111","101","100","110"}; // ƒ|ƒCƒ“ƒ^•¶š—ñ‚Ì”z—ñ
+//const char *start_blocks[8]={"001","011","000","010","111","101","100","110"}; // ãƒã‚¤ãƒ³ã‚¿æ–‡å­—åˆ—ã®é…åˆ—
 //int start_directions[8]={0,0,0,0,0,0,0,0};
-const char *start_blocks[8]={"011","001","000","010","111","101","100","110"}; // ƒ|ƒCƒ“ƒ^•¶š—ñ‚Ì”z—ñ
+const char *start_blocks[8]={"011","001","000","010","111","101","100","110"}; // ãƒã‚¤ãƒ³ã‚¿æ–‡å­—åˆ—ã®é…åˆ—
 int start_directions[8]={0,0,0,0,0,0,0,0};
 
-const char *goal_blocks[8]={"011","001","000","010","111","101","100","110"}; // ƒ|ƒCƒ“ƒ^•¶š—ñ‚Ì”z—ñ
+const char *goal_blocks[8]={"011","001","000","010","111","101","100","110"}; // ãƒã‚¤ãƒ³ã‚¿æ–‡å­—åˆ—ã®é…åˆ—
 int goal_directions[8]={0,0,0,0,0,0,0,0};
 
-//const char *start_blocks[8]={"011","001","000","010","100","110","101","111"}, // ƒ|ƒCƒ“ƒ^•¶š—ñ‚Ì”z—ñ
-//*goal_blocks[8]={"111","100","101","011","000","001","110","010"}; // ƒ|ƒCƒ“ƒ^•¶š—ñ‚Ì”z—ñ
+//const char *start_blocks[8]={"011","001","000","010","100","110","101","111"}, // ãƒã‚¤ãƒ³ã‚¿æ–‡å­—åˆ—ã®é…åˆ—
+//*goal_blocks[8]={"111","100","101","011","000","001","110","010"}; // ãƒã‚¤ãƒ³ã‚¿æ–‡å­—åˆ—ã®é…åˆ—
 //int start_directions[8]={0,0,0,0,0,2,0,0},goal_directions[8]={2,0,0,2,0,1,2,2};
 int main(void){
 	const char *blocks[8];
 	int directions[8];
 	char displacement[256],invalid_rotation[4],rotation[10]="0";
 
-	blockscpy(blocks,start_blocks); // Œ³‚É–ß‚·
-	strcpy(displacement,""); // Œ³‚É–ß‚·
-	strcpy(invalid_rotation,""); // Œ³‚É–ß‚·
-	memcpy(directions,start_directions,sizeof(start_directions)); // Œ³‚É–ß‚·
+	blockscpy(blocks,start_blocks); // å…ƒã«æˆ»ã™
+	strcpy(displacement,""); // å…ƒã«æˆ»ã™
+	strcpy(invalid_rotation,""); // å…ƒã«æˆ»ã™
+	memcpy(directions,start_directions,sizeof(start_directions)); // å…ƒã«æˆ»ã™
 
-	printf("uendv‚ÅI—¹\nuresetv‚ÅŒ³‚Ìó‘Ô‚É–ß‚é\n");
+	printf("ã€Œendã€ã§çµ‚äº†\nã€Œresetã€ã§å…ƒã®çŠ¶æ…‹ã«æˆ»ã‚‹\n");
 	for(int i=0;i<8;i++){
 		printf("%s %d\n",blocks[i],directions[i]);
 	}
-	printf("displacement=%s invalid_rotation=%s \n¨",displacement,invalid_rotation);
+	printf("displacement=%s invalid_rotation=%s \nâ†’",displacement,invalid_rotation);
 	scanf("%s",rotation);
 	if(!strcmp(rotation,"end"))return(0);
 	do{
 		if(!strcmp(rotation,"reset")){
-			blockscpy(blocks,start_blocks); // Œ³‚É–ß‚·
-			strcpy(displacement,""); // Œ³‚É–ß‚·
-			strcpy(invalid_rotation,""); // Œ³‚É–ß‚·
-			memcpy(directions,start_directions,sizeof(start_directions)); // Œ³‚É–ß‚·
+			blockscpy(blocks,start_blocks); // å…ƒã«æˆ»ã™
+			strcpy(displacement,""); // å…ƒã«æˆ»ã™
+			strcpy(invalid_rotation,""); // å…ƒã«æˆ»ã™
+			memcpy(directions,start_directions,sizeof(start_directions)); // å…ƒã«æˆ»ã™
 		}
 		else{
 			strcat(displacement,rotation);
@@ -174,9 +174,9 @@ int main(void){
 			printf("%s %d\n",blocks[i],directions[i]);
 		}
 		if(blockscmp(blocks,goal_blocks) && !memcmp(directions,goal_directions,sizeof(start_directions))){
-			printf("ƒS[ƒ‹‚Æ‡’v‚µ‚Ü‚µ‚½\n");
+			printf("ã‚´ãƒ¼ãƒ«ã¨åˆè‡´ã—ã¾ã—ãŸ\n");
 		}
-		printf("displacement=%s invalid_rotation=%s \n¨",displacement,invalid_rotation);
+		printf("displacement=%s invalid_rotation=%s \nâ†’",displacement,invalid_rotation);
 		scanf("%s",rotation);
 	}while(strcmp(rotation,"end"));
 	return(0);

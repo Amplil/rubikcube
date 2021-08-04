@@ -141,9 +141,9 @@ int main(void){
 	const char *block[8]={"011","001","000","010","111","101","100","110"};
 	char displacement[8][256]={"","","","","","","",""},rotation[10]="0",buffer[256];
 
-	printf("uendv‚ÅI—¹\nuresetv‚ÅŒ³‚Ìó‘Ô‚É–ß‚é\n");
+	printf("ã€Œendã€ã§çµ‚äº†\nã€Œresetã€ã§å…ƒã®çŠ¶æ…‹ã«æˆ»ã‚‹\n");
 	for(i=0;i<8;i++)printf("%s %s\n",block[i],displacement[i]);
-	printf("\n¨");
+	printf("\nâ†’");
 	scanf("%s",rotation);
 	if(!strcmp(rotation,"end"))return(0);
 	do{
@@ -159,7 +159,7 @@ int main(void){
 			strcpy(displacement[i],buffer);
 			printf("%s %s\n",block[i],displacement[i]);
 		}
-		printf("\n¨");
+		printf("\nâ†’");
 		scanf("%s",rotation);
 	}while(strcmp(rotation,"end"));
 	return(0);
